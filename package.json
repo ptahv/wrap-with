@@ -1,6 +1,6 @@
 {
   "name": "wrap-with",
-  "version": "0.0.1-develop.1",
+  "version": "0.1.0-RC.1",
   "description": "React component for wrapping multiple React contexts",
   "main": "dist/wrap-with.js",
   "files": [

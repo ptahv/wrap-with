@@ -1,31 +1,75 @@
 import React from 'react';
 
-export default ({ children, ...kontexts }) => {
-    const kontextKeys = Object.keys(kontexts);
+export default {
+    Providers: class Providers extends React.Component {
+        ProvidersComponent = null;
     
-    if (!kontextKeys.length)
-        return children;
+        constructor(props) {
+            super();
+    
+            const { children, ...components } = props;
+            const componentKeys = Object.keys(components);
+    
+            this.ProvidersComponent = componentKeys.reduceRight((ChildComponent, key, i) => {
+                const Component = components[key];
+    
+                return ({children}) => (
+                    <Component>
+                        <ChildComponent>
+                            {children}
+                        </ChildComponent>
+                    </Component>
+                )
+            }, ({children}) => children)
+        }
+    
+        render() {
+            const { ProvidersComponent, props } = this;
+    
+            return <ProvidersComponent>
+                {props.children}
+            </ProvidersComponent>
+        }
+    },
 
-    return kontextKeys.reduce((retVal, key, i) => {
-        const Kontext = kontexts[key];
+    Consumers: class Consumers extends React.Component {
+        ConsumersComponent = null;
 
-        if (i === 0) return child => (
-            <Kontext>
-                {(...val) => child({ 
-                        // For Higher Order Components
-                    [key]: val.length > 1 ? val : val[0] || {} 
-                })}
-            </Kontext>
-        )
+        constructor(props){
+            super();
+    
+            const { children, ...components } = props;
+            const componentKeys = Object.keys(components);
+            
+            if (!componentKeys.length || typeof children !== 'function')
+                return children;
+        
+            this.ConsumersComponent = componentKeys.reduceRight((ChildComponent, key) => {
+                const Component = components[key];
+                
+                return ({children, data = {}}) => (
+                    <Component>
+                        {(...val) => {
+                            const newData = {
+                                ...data,
+                                [key]: val.length > 1 ? val : val[0] 
+                            };
+    
+                            return <ChildComponent data={newData}>
+                                {children}
+                            </ChildComponent>
+                        }}
+                    </Component>
+                )
+            }, ({children, data}) => children(data))
+        }
+    
+        render() {
+            const { ConsumersComponent, props } = this;
 
-        return child => retVal(
-            (prevVal) => (
-                <Kontext>
-                    {(...val) => child(Object.assign({}, prevVal, { 
-                        [key]: val.length > 1 ? val : val[0] || {} 
-                    }))}
-                </Kontext>
-            )
-        );
-    }, c => c)(typeof children === 'function' ? children : () => children)
+            return <ConsumersComponent>
+                {props.children}
+            </ConsumersComponent>
+        }
+    }
 }
