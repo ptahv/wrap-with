@@ -2,8 +2,6 @@ import React from 'react';
 
 export default {
     Providers: class Providers extends React.Component {
-        ProvidersComponent = null;
-    
         constructor(props) {
             super();
     
@@ -33,8 +31,6 @@ export default {
     },
 
     Consumers: class Consumers extends React.Component {
-        ConsumersComponent = null;
-
         constructor(props){
             super();
     
