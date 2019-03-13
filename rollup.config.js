@@ -22,9 +22,9 @@ export default [{
     input: 'src/index.js',
     output: {
         globals: { react: 'React' },
-        file: 'dist/life-cyclec.js',
+        file: 'dist/wrap-with.js',
         format: 'umd',
-        name: 'life-cyclec',
+        name: 'wrap-with',
         indent: false
     },
     plugins: plugins.concat([
@@ -36,9 +36,9 @@ export default [{
     external: ['react'],
     input: 'src/index.js',
     output: {
-        file: 'dist/life-cyclec.min.js',
+        file: 'dist/wrap-with.min.js',
         format: 'umd',
-        name: 'life-cyclec',
+        name: 'wrap-with',
         globals: { react: 'React' },
         indent: false
     },

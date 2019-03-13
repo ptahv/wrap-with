@@ -1,8 +1,8 @@
 {
-  "name": "react-life-cycle",
+  "name": "wrap-with",
   "version": "0.1.0-RC.1",
-  "description": "React component for handling react life-cycle events.",
-  "main": "dist/react-life-cycle.js",
+  "description": "React component for wrapping multiple React contexts",
+  "main": "dist/wrap-with.js",
   "files": [
     "dist",
     "src"
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ptahv/react-life-cycle.git"
+    "url": "git+https://github.com/ptahv/wrap-with.git"
   },
   "keywords": [
     "react",

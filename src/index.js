@@ -1,27 +1,71 @@
 import React from 'react';
 
-export default class extends React.Component {
-    constructor(props) {
-        super();
+export default {
+    Providers: class Providers extends React.Component {
+        constructor(props) {
+            super();
+    
+            const { children, ...components } = props;
+            const componentKeys = Object.keys(components);
+    
+            this.ProvidersComponent = componentKeys.reduceRight((ChildComponent, key, i) => {
+                const Component = components[key];
+    
+                return ({children}) => (
+                    <Component>
+                        <ChildComponent>
+                            {children}
+                        </ChildComponent>
+                    </Component>
+                )
+            }, ({children}) => children)
+        }
+    
+        render() {
+            const { ProvidersComponent, props } = this;
+    
+            return <ProvidersComponent>
+                {props.children}
+            </ProvidersComponent>
+        }
+    },
 
-        Object.keys(props)
-            .filter(key => !['render', 'constructor'].includes(key))
-            .forEach(key => {
-                if (['shouldComponentUpdate'].includes(key))
-                    this[key] = (props) => props[key]();
-                else 
-                    this[key] = () => this.props[key]();
-            });
-
-        if (props.constructor)
-            props.constructor();
-    }
-
-    render() {
-        const { render, children } = this.props;
+    Consumers: class Consumers extends React.Component {
+        constructor(props){
+            super();
+    
+            const { children, ...components } = props;
+            const componentKeys = Object.keys(components);
+            
+            if (!componentKeys.length || typeof children !== 'function')
+                return children;
         
-        return render 
-            ? render()
-            : children ? children : null
+            this.ConsumersComponent = componentKeys.reduceRight((ChildComponent, key) => {
+                const Component = components[key];
+                
+                return ({children, data = {}}) => (
+                    <Component>
+                        {(...val) => {
+                            const newData = {
+                                ...data,
+                                [key]: val.length > 1 ? val : val[0] 
+                            };
+    
+                            return <ChildComponent data={newData}>
+                                {children}
+                            </ChildComponent>
+                        }}
+                    </Component>
+                )
+            }, ({children, data}) => children(data))
+        }
+    
+        render() {
+            const { ConsumersComponent, props } = this;
+
+            return <ConsumersComponent>
+                {props.children}
+            </ConsumersComponent>
+        }
     }
 }
