@@ -1,8 +1,8 @@
 {
-  "name": "life-cycle-events",
+  "name": "react-life-cycle",
   "version": "0.1.0-RC.1",
-  "description": "React component for handling react life-cycle-events events.",
-  "main": "dist/life-cycle-events.js",
+  "description": "React component for handling react life-cycle events.",
+  "main": "dist/react-life-cycle.js",
   "files": [
     "dist",
     "src"
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ptahv/life-cycle-events.git"
+    "url": "git+https://github.com/ptahv/react-life-cycle.git"
   },
   "keywords": [
     "react",
