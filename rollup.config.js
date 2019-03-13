@@ -22,9 +22,9 @@ export default [{
     input: 'src/index.js',
     output: {
         globals: { react: 'React' },
-        file: 'dist/life-cycle.js',
+        file: 'dist/life-cycle-events.js',
         format: 'umd',
-        name: 'life-cycle',
+        name: 'life-cycle-events',
         indent: false
     },
     plugins: plugins.concat([
@@ -36,9 +36,9 @@ export default [{
     external: ['react'],
     input: 'src/index.js',
     output: {
-        file: 'dist/life-cycle.min.js',
+        file: 'dist/life-cycle-events.min.js',
         format: 'umd',
-        name: 'life-cycle',
+        name: 'life-cycle-events',
         globals: { react: 'React' },
         indent: false
     },
